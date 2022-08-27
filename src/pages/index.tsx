@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Chart from "react-google-charts";
 import { Header } from "../components/Header";
 
-import { ColumnDefinitionType } from "../components/TableComponent";
 import { api } from "../services/api";
 
 export interface StudentsType {
@@ -69,15 +68,6 @@ export default function Home() {
     //getStudentsByDate();
   }, [getStudentsByDate]);
 
-  const columnsCourses: ColumnDefinitionType<
-    Pick<CoursesType, "name">,
-    keyof Pick<CoursesType, "name">
-  >[] = [
-    {
-      key: "name",
-      header: "Courses",
-    },
-  ];
   const courseCounts = useMemo(() => {
     return students
       .slice(0, 5)
