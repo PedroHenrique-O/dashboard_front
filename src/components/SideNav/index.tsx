@@ -21,16 +21,21 @@ export function SideNav() {
       icon: "/images/nav/book.svg",
     },
   ];
+  const handleMouseLeave = () => {
+    const timeout = setTimeout(() => {
+      setShouldSlide(false);
+    }, 500);
+    return () => clearTimeout(timeout);
+  };
+  const handleClick = (e: any) => {
+    setShouldSlide(true);
+    e.stopPropagation();
+  };
 
   return (
     <nav
-      onMouseLeave={() => {
-        const timeout = setTimeout(() => {
-          setShouldSlide(false);
-        }, 2000);
-        return () => clearTimeout(timeout);
-      }}
-      onMouseEnter={() => setShouldSlide(true)}
+      onMouseLeave={() => handleMouseLeave()}
+      onMouseEnter={(e) => handleClick(e)}
       className={`flex flex-col ${
         shouldSlide && "left-[20px]"
       } gap-y-16 rounded-[100px] items-center justify-center h-[610px] absolute -left-[40px] transition-all translate-y-[25%]  p-7 bg-[#124845]`}
