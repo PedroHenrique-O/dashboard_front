@@ -38,6 +38,10 @@ export interface CountsType {
 }
 
 export interface StudentsByCampusType {
+  campusWithMoreStudents: {
+    name: string;
+  };
+
   studentsByCampusSorted: {
     ["ASSIS CHATEAUBRIAND"]: number;
     ["AVANÇADO ARAPONGAS"]: number;
@@ -123,7 +127,7 @@ export default function Home() {
             borderRadius: "50px",
           }}
           data={[
-            ["Alunos por Campus", "Alunos"],
+            ["Cursos por Campus", "Cursos"],
             ...stundentsKeys.map((key, index) => [key, studentsValues[index]]),
           ]}
         />

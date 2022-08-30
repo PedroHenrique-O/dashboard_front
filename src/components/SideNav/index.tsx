@@ -1,11 +1,14 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useState } from "react";
 export function SideNav() {
+  const router = useRouter();
   const [shouldSlide, setShouldSlide] = useState(false);
-  const isSelected = "Home";
+  const currentRoute = router.pathname;
+
   const naviOptions = [
     {
-      label: "Home",
+      label: "",
       icon: "/images/nav/home.svg",
     },
     {
@@ -32,6 +35,19 @@ export function SideNav() {
     e.stopPropagation();
   };
 
+  const isCurrentRoute = (value: string) => {
+    const current = router.pathname;
+    const selected = value.toLocaleLowerCase();
+    if (current === selected) {
+      return "bg-[#0E3937]  hover:bg-[#0E3937]/50 ";
+    }
+    return "";
+  };
+
+  const handleRoute = (route: string) => {
+    const link = route.toLocaleLowerCase();
+    return router.push(`/${link}`);
+  };
   return (
     <nav
       onMouseLeave={() => handleMouseLeave()}
@@ -42,8 +58,9 @@ export function SideNav() {
     >
       {naviOptions.map((option) => (
         <button
+          onClick={() => handleRoute(option.label)}
           className={`${
-            isSelected === option.label
+            currentRoute === `/${option.label.toLocaleLowerCase()}`
               ? "bg-[#0E3937]  hover:bg-[#0E3937]/50 "
               : ""
           } rounded-full p-4`}
