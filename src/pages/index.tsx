@@ -111,7 +111,7 @@ export default function Home() {
 
         <Chart
           className="bg-black mt-6"
-          chartType="Bar"
+          chartType="AreaChart"
           options={{
             title: "Alunos por Campus",
             is3D: true,
