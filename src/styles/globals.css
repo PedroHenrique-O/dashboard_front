@@ -4,12 +4,13 @@
 
 @layer base {
   body {
-    @apply bg-[#111827];
+    @apply bg-[#33363E];
   }
 
   html,
   body,
   label {
     font-family: "Roboto", sans-serif;
+    color: #fff;
   }
 }

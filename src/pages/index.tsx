@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Chart from "react-google-charts";
+import { Card } from "../components/Card";
 import { Header } from "../components/Header";
+import { SideNav } from "../components/SideNav";
 
 import { api } from "../services/api";
 
@@ -20,71 +22,112 @@ export interface CoursesType {
   name: string;
 }
 
+export interface StudentsByStatusType {
+  abandono: number;
+  concluída: number;
+  desligado: number;
+  em_curso: number;
+  reprovada: number;
+  transf_ext: number;
+}
+
+export interface CountsType {
+  allCampus: number;
+  allCourses: number;
+  allStudents: number;
+}
+
+export interface StudentsByCampusType {
+  studentsByCampusSorted: {
+    ["ASSIS CHATEAUBRIAND"]: number;
+    ["AVANÇADO ARAPONGAS"]: number;
+    [" AVANÇADO ASTORGA"]: number;
+    [" AVANÇADO BARRACÃO"]: number;
+    [" AVANÇADO CORONEL VIVIDA"]: number;
+    ["AVANÇADO GOIOERÊ"]: number;
+    ["AVANÇADO QUEDAS DO IGUAÇU"]: number;
+    ["CAMPO LARGO"]: number;
+    ["CAPANEMA"]: number;
+    ["CASCAVEL"]: number;
+    ["COLOMBO"]: number;
+    ["CURITIBA"]: number;
+    ["FOZ DO IGUAÇU"]: number;
+    ["IRATI"]: number;
+    ["IVAIPORÃ"]: number;
+    ["JACAREZINHO"]: number;
+    ["JAGUARIAÍVA"]: number;
+    ["LONDRINA"]: number;
+    ["PALMAS"]: number;
+    ["PARANAGUÁ"]: number;
+    ["PARANAVAÍ"]: number;
+    ["PINHAIS"]: number;
+    ["PITANGA"]: number;
+    ["TELÊMACO BORBA"]: number;
+    ["UMUARAMA"]: number;
+    ["UNIÃO DA VITÓRIA"]: number;
+  };
+}
+
 export default function Home() {
-  const [students, setStudents] = useState<StudentsType[]>([]);
-  const [courses, setCourses] = useState<CoursesType[]>([]);
+  const [studentsByCampus, setStudentsByCampus] =
+    useState<StudentsByCampusType>();
+  const [counts, setCounts] = useState<CountsType>();
+
   const getCounts = async () => {
     const { data: countsResponse } = await api.get("/v1");
-    console.log({ countsResponse });
-  };
-  const getCourses = async () => {
-    const { data: coursesResponse } = await api.get("/v1/campus/courses");
-    setCourses(coursesResponse);
-    console.log({ coursesResponse });
-  };
-  const getStudents = async () => {
-    const { data: studentsResponse } = await api.get<StudentsType[]>(
-      "/v1/courses/students"
-    );
-    setStudents(studentsResponse);
-    console.log({ studentsResponse });
+    setCounts(countsResponse);
   };
 
-  const getModalities = async () => {
-    const { data: modalitiesResponse } = await api.get("/v1/courses/modality");
-    console.log({ modalitiesResponse });
-  };
+  const getStudentsByCampus = async () => {
+    const { data: studentsByCampusResponse } =
+      await api.get<StudentsByCampusType>(`/v1/students/campus`);
 
-  const getStudentsByDate = useCallback(async () => {
-    const start = "2014/01/01";
-    const end = "2022/01/31";
-    const { data: studentsByDateResponse } = await api.get(
-      `/v1/students/date?start=${start}&end=${end}`
-    );
-    console.log({ studentsByDateResponse });
-  }, []);
-
-  const getStudentsByEnrollStatus = async () => {
-    const { data: studentsByEnrollStatusResponse } = await api.get(
-      `/v1/students/status`
-    );
-    console.log({ studentsByEnrollStatusResponse });
+    setStudentsByCampus(studentsByCampusResponse);
   };
 
   useEffect(() => {
-    getStudents();
-    getCourses();
-    // getModalities();
-    //getStudentsByDate();
-  }, [getStudentsByDate]);
+    getCounts();
+    getStudentsByCampus();
+  }, []);
 
-  const courseCounts = useMemo(() => {
-    return students
-      .slice(0, 5)
-      .map((student) => [student.name, student._count.Students]);
-  }, [students]);
+  const [stundentsKeys, studentsValues] = useMemo(() => {
+    const keys = Object.keys(studentsByCampus?.studentsByCampusSorted ?? {});
+    const values = Object.values(
+      studentsByCampus?.studentsByCampusSorted ?? {}
+    );
+    return [keys, values];
+  }, [studentsByCampus?.studentsByCampusSorted]);
 
   return (
-    <div className="container mx-auto">
-      <Header />
-      <Chart
-        legend_toggle
-        chartType="AreaChart"
-        data={[["Curso", "Quantidade"], ...courseCounts]}
-        width="100%"
-        height="400px"
-        legendToggle
-      />
-    </div>
+    <>
+      <SideNav />
+      <div className="container mx-auto relative">
+        <Header />
+        <div className="grid mx-auto grid-cols-3">
+          <Card count={counts?.allCampus ?? 0} title="Campus" />
+          <Card title="Cursos" count={counts?.allCourses ?? 0} />
+          <Card title="Alunos" count={counts?.allStudents ?? 0} />
+        </div>
+
+        <Chart
+          className="bg-black mt-6"
+          chartType="Bar"
+          options={{
+            title: "Alunos por Campus",
+            is3D: true,
+            colors: ["#124845"],
+          }}
+          style={{
+            width: "97%",
+            height: "400px",
+            borderRadius: "50px",
+          }}
+          data={[
+            ["Alunos por Campus", "Alunos"],
+            ...stundentsKeys.map((key, index) => [key, studentsValues[index]]),
+          ]}
+        />
+      </div>
+    </>
   );
 }
