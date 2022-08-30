@@ -37,7 +37,7 @@ export function SideNav() {
       onMouseLeave={() => handleMouseLeave()}
       onMouseEnter={(e) => handleClick(e)}
       className={`flex flex-col ${
-        shouldSlide && "left-[20px]"
+        shouldSlide && "translate-x-[50%]"
       } gap-y-16 rounded-[100px] items-center justify-center h-[610px] absolute -left-[40px] transition-all translate-y-[25%]  p-7 bg-[#124845]`}
     >
       {naviOptions.map((option) => (
