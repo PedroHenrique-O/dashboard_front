@@ -7,7 +7,12 @@ interface LoadingProps {
   width?: string | number;
 }
 
-export function LoadingComponent({ color, height, type, width }: LoadingProps) {
+export function LoadingComponent({
+  color,
+  height = "40%",
+  type,
+  width = "40%",
+}: LoadingProps) {
   return (
     <div className=" overflow-clip overflow-y-hidden flex items-center justify-center ">
       <ReactLoading type={type} color={color} height={height} width={width} />

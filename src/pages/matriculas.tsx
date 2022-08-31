@@ -44,7 +44,7 @@ export interface EntranceAndExit {
   exit: number;
 }
 
-export default function Location() {
+export default function Enrollments() {
   const [counts, setCounts] = useState<CountsType>();
   const [responseEnrollmentsByDate, setResponseEnrollmentsByDate] =
     useState<ResponseEnrollmentsByDateType>();
@@ -127,14 +127,7 @@ export default function Location() {
   }, []);
 
   if (!counts || !responseEnrollmentsByDate || !enrollByStatus) {
-    return (
-      <LoadingComponent
-        width={"50%"}
-        height="50%"
-        type="spinningBubbles"
-        color="#124845"
-      />
-    );
+    return <LoadingComponent type="spinningBubbles" color="#124845" />;
   }
 
   return (

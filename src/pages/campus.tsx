@@ -64,14 +64,7 @@ export default function Campus() {
   }, []);
 
   if (!counts || !studentsByCampus || !campusWithMoreCourses) {
-    return (
-      <LoadingComponent
-        type="spinningBubbles"
-        color="#124845"
-        width={"50%"}
-        height="50%"
-      />
-    );
+    return <LoadingComponent type="spinningBubbles" color="#124845" />;
   }
 
   return (

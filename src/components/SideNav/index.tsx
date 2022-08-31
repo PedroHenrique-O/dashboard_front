@@ -20,7 +20,7 @@ export function SideNav() {
       icon: "/images/nav/book.png",
     },
     {
-      label: "Location",
+      label: "Matriculas",
       icon: "/images/nav/university.svg",
     },
   ];

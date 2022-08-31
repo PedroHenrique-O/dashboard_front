@@ -105,14 +105,7 @@ export default function Students() {
   }, [courseWithStudentes?.coursesWithStudents]);
 
   if (!counts || !courseWithStudentes || !modality) {
-    return (
-      <LoadingComponent
-        type="spinningBubbles"
-        width={"50%"}
-        height="50%"
-        color="#124845"
-      />
-    );
+    return <LoadingComponent type="spinningBubbles" color="#124845" />;
   }
 
   return (

@@ -122,14 +122,7 @@ export default function Home() {
   }, [studentsByCampus?.studentsByCampusSorted]);
 
   if (!studentsByCampus || !counts) {
-    return (
-      <LoadingComponent
-        width={"50%"}
-        height="50%"
-        type="spinningBubbles"
-        color="#124845"
-      />
-    );
+    return <LoadingComponent type="spinningBubbles" color="#124845" />;
   }
 
   return (
