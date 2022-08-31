@@ -140,7 +140,7 @@ export default function Enrollments() {
           <Card
             classNameSubtitle="-ml-5"
             count={renderChart()}
-            title="Campus"
+            title="Status por Alunos"
           />
           <Card
             title="Entradas e Saidas 2021 - Atual"

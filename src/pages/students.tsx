@@ -114,12 +114,12 @@ export default function Students() {
       <div className="container mx-auto relative">
         <Header />
         <div className="grid mx-auto grid-cols-3">
-          <Card count={renderChart()} title="Status por aluno" />
+          <Card count={renderChart()} title="Modalidade mais usada" />
           <Card count={counts?.allCourses} title="Cursos" />
           <Card
             classNameSubtitle="!text-4xl"
             count={courseWithStudentes?.courseWithMoreStudents}
-            title="Alunos"
+            title="Curso com mais alunos"
           />
         </div>
 
