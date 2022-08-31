@@ -21,7 +21,7 @@ export function SideNav() {
     },
     {
       label: "Matriculas",
-      icon: "/images/nav/university.svg",
+      icon: "/images/nav/enroll.png",
     },
   ];
   const handleMouseLeave = () => {
