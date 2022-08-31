@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Chart from "react-google-charts";
+import Loading from "react-loading";
 import { Card } from "../components/Card";
 import { Header } from "../components/Header";
+import { LoadingComponent } from "../components/Loading";
 import { SideNav } from "../components/SideNav";
 
 import { api } from "../services/api";
@@ -72,6 +74,23 @@ export interface StudentsByCampusType {
   };
 }
 
+export const options = {
+  titleTextStyle: {
+    color: "#fff",
+  },
+  hAxis: {
+    textStyle: { color: "#FFF", fontSize: 9 },
+  },
+  vAxis: {
+    textStyle: { color: "#FFF", fontSize: 9 },
+  },
+  legend: {
+    textStyle: { color: "#FFF" },
+  },
+  colors: ["#124845", "#ffffff"],
+  backgroundColor: "#33363E",
+};
+
 export default function Home() {
   const [studentsByCampus, setStudentsByCampus] =
     useState<StudentsByCampusType>();
@@ -102,6 +121,17 @@ export default function Home() {
     return [keys, values];
   }, [studentsByCampus?.studentsByCampusSorted]);
 
+  if (!studentsByCampus || !counts) {
+    return (
+      <LoadingComponent
+        width={"50%"}
+        height="50%"
+        type="spinningBubbles"
+        color="#124845"
+      />
+    );
+  }
+
   return (
     <>
       <SideNav />
@@ -114,12 +144,12 @@ export default function Home() {
         </div>
 
         <Chart
-          className="bg-black mt-6"
+          className="bg-black mt-6 shadow-2xl "
           chartType="AreaChart"
           options={{
+            ...options,
             title: "Alunos por Campus",
             is3D: true,
-            colors: ["#124845"],
           }}
           style={{
             width: "97%",

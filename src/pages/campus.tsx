@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import Chart from "react-google-charts";
-import { CountsType, StudentsByCampusType } from ".";
+import ReactLoading from "react-loading";
+import { CountsType, options, StudentsByCampusType } from ".";
 import { Card } from "../components/Card";
 import { Header } from "../components/Header";
+import { LoadingComponent } from "../components/Loading";
 import { SideNav } from "../components/SideNav";
 import { api } from "../services/api";
 
@@ -61,6 +63,17 @@ export default function Campus() {
     getCampusWithMoreStudedents();
   }, []);
 
+  if (!counts || !studentsByCampus || !campusWithMoreCourses) {
+    return (
+      <LoadingComponent
+        type="spinningBubbles"
+        color="#124845"
+        width={"50%"}
+        height="50%"
+      />
+    );
+  }
+
   return (
     <>
       <SideNav />
@@ -81,19 +94,19 @@ export default function Campus() {
         </div>
 
         <Chart
-          className="bg-black mt-6"
+          className="bg-black mt-6 shadow-2xl "
           chartType="AreaChart"
           options={{
-            title: "Alunos por Campus",
+            ...options,
+            title: "Cursos por Campus",
             is3D: true,
-            colors: ["#124845"],
           }}
           style={{
             width: "97%",
             height: "400px",
             borderRadius: "50px",
           }}
-          data={[["Alunos por Campus", "Alunos"], ...[...getCoursesByCampus]]}
+          data={[["Cursos por Campus", "Alunos"], ...[...getCoursesByCampus]]}
         />
       </div>
     </>

@@ -16,12 +16,12 @@ export function SideNav() {
       icon: "/images/nav/nav.svg",
     },
     {
-      label: "Location",
-      icon: "/images/nav/university.svg",
+      label: "Students",
+      icon: "/images/nav/book.png",
     },
     {
-      label: "Students",
-      icon: "/images/nav/book.svg",
+      label: "Location",
+      icon: "/images/nav/university.svg",
     },
   ];
   const handleMouseLeave = () => {
@@ -33,15 +33,6 @@ export function SideNav() {
   const handleClick = (e: any) => {
     setShouldSlide(true);
     e.stopPropagation();
-  };
-
-  const isCurrentRoute = (value: string) => {
-    const current = router.pathname;
-    const selected = value.toLocaleLowerCase();
-    if (current === selected) {
-      return "bg-[#0E3937]  hover:bg-[#0E3937]/50 ";
-    }
-    return "";
   };
 
   const handleRoute = (route: string) => {
