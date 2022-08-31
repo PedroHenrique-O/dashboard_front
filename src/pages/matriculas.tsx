@@ -155,7 +155,7 @@ export default function Enrollments() {
             backgroundColor: "#33363E",
           }}
           style={{
-            width: "97%",
+            width: "95%",
             color: "#ffffff",
             borderRadius: 50,
             height: "400px",
