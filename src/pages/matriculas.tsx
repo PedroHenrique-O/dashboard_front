@@ -138,7 +138,7 @@ export default function Enrollments() {
         <Header />
         <div className="grid mx-auto grid-cols-3">
           <Card
-            classNameSubtitle="-ml-3"
+            classNameSubtitle="-ml-5"
             count={renderChart()}
             title="Campus"
           />
