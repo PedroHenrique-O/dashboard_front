@@ -103,13 +103,14 @@ export default function Enrollments() {
       chartType="PieChart"
       options={{
         ...options,
+
         colors: undefined,
 
         title: "Status por aluno",
         is3D: true,
       }}
       style={{
-        width: "99%",
+        width: "97%",
         height: "150px",
         borderRadius: "50px",
       }}
