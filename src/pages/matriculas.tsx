@@ -137,7 +137,11 @@ export default function Enrollments() {
       <div className="container mx-auto relative">
         <Header />
         <div className="grid mx-auto grid-cols-3">
-          <Card count={renderChart()} title="Campus" />
+          <Card
+            classNameSubtitle="-ml-3"
+            count={renderChart()}
+            title="Campus"
+          />
           <Card
             title="Entradas e Saidas 2021 - Atual"
             count={`${enrolls}/${leaves}`}
